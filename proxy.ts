@@ -17,6 +17,22 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Public marketing routes — no auth required
+  const publicRoutes = [
+    "/about",
+    "/blog",
+    "/contact",
+    "/products",
+    "/api/widget-chat",
+  ];
+  const isPublicRoute =
+    pathname === "/" ||
+    publicRoutes.some((route) => pathname.startsWith(route));
+
+  if (isPublicRoute) {
+    return NextResponse.next();
+  }
+
   const token = await getToken({
     req: request,
     secret: process.env.AUTH_SECRET,

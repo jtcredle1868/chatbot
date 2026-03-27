@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
 import { ChatbotWidget } from "@/components/marketing/chatbot-widget";
@@ -12,7 +13,9 @@ export default function MarketingLayout({
       <Navbar />
       <main>{children}</main>
       <Footer />
-      <ChatbotWidget />
+      <Suspense fallback={null}>
+        <ChatbotWidget />
+      </Suspense>
     </div>
   );
 }

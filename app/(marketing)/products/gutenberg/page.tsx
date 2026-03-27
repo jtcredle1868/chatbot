@@ -88,9 +88,9 @@ export default function GutenbergPage() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://app.masterprose.studio/gutenberg"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/chat"
+                
+                
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-gray-900 transition-all hover:opacity-90 hover:shadow-lg text-lg"
                 style={{ backgroundColor: "#fde68a" }}
               >
@@ -243,9 +243,9 @@ export default function GutenbergPage() {
           <h2 className="text-4xl font-bold text-white mb-4">Start Publishing Today</h2>
           <p className="text-amber-100 mb-8 text-lg">14-day free trial. No credit card required.</p>
           <a
-            href="https://app.masterprose.studio/gutenberg"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/chat"
+            
+            
             className="inline-flex items-center gap-2 px-10 py-4 rounded-xl font-bold text-gray-900 text-lg transition-all hover:opacity-90 hover:shadow-xl"
             style={{ backgroundColor: "#fde68a" }}
           >

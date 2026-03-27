@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 function InstagramIcon() {
@@ -41,7 +43,7 @@ function XIcon() {
 }
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2025;
 
   return (
     <footer style={{ backgroundColor: "var(--mp-ink)" }} className="text-white">

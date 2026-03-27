@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import { useChat } from "@ai-sdk/react";
 import { MessageCircle, X, Send, Bot } from "lucide-react";
 
@@ -8,8 +8,10 @@ export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatId = useId();
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    id: chatId,
     api: "/api/widget-chat",
     initialMessages: [
       {
