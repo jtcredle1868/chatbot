@@ -11,18 +11,6 @@
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
-/* Master Prose System brand colors */
-:root {
-  --mp-ink: #0F0A1E;
-  --mp-purple: #6D28D9;
-  --mp-violet: #8B5CF6;
-  --mp-gold: #F59E0B;
-  --mp-gold-light: #FCD34D;
-  --mp-cream: #FEF9EE;
-  --mp-slate: #1E293B;
-  --mp-muted: #6B7280;
-}
-
 /* define design tokens (light mode) */
 :root {
   --background: hsl(0 0% 100%);

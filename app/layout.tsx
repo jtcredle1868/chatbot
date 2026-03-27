@@ -7,10 +7,9 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://masterprose.studio"),
-  title: "Master Prose System - AI Writing Suite",
-  description:
-    "The complete AI writing suite for professionals. Write, edit, generate, and publish with Master Prose System.",
+  metadataBase: new URL("https://chat.vercel.ai"),
+  title: "Next.js Chatbot Template",
+  description: "Next.js chatbot template using the AI SDK.",
 };
 
 export const viewport = {
