@@ -17,6 +17,11 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const publicPaths = ["/about", "/blog", "/contact", "/products", "/api/widget-chat"];
+  if (pathname === "/" || publicPaths.some(p => pathname.startsWith(p))) {
+    return NextResponse.next();
+  }
+
   const token = await getToken({
     req: request,
     secret: process.env.AUTH_SECRET,
