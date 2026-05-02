@@ -7,9 +7,6 @@ services:
     buildCommand: pnpm install && pnpm build
     startCommand: pnpm start
     healthCheckPath: /ping
-    ipAllowList:
-      - source: 0.0.0.0/0
-        description: everywhere
     envVars:
       - key: NODE_ENV
         value: production
@@ -31,9 +28,6 @@ services:
     name: masterprose-redis
     plan: free
     region: oregon
-    ipAllowList:
-      - source: 0.0.0.0/0
-        description: everywhere
 
 databases:
   - name: masterprose-db
