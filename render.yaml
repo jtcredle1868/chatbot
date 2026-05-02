@@ -7,6 +7,7 @@ services:
     buildCommand: pnpm install && pnpm build
     startCommand: pnpm start
     healthCheckPath: /ping
+    ipAllowList: []
     envVars:
       - key: NODE_ENV
         value: production
