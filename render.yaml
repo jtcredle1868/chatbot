@@ -31,6 +31,9 @@ services:
     name: masterprose-redis
     plan: free
     region: oregon
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
 
 databases:
   - name: masterprose-db
