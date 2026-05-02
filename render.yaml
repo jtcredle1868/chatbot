@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: masterprose-web
+    env: node
+    region: oregon
+    plan: free
+    nodeVersion: 22.22.0
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /ping
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: AUTH_SECRET
+        value: mP9xK2vL8nQ4wR7tY3uJ6hD5fG1bC0eA
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: POSTGRES_URL
+        fromDatabase:
+          name: masterprose-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: masterprose-redis
+          property: connectionString
+
+  - type: redis
+    name: masterprose-redis
+    plan: free
+    region: oregon
+    maxmemoryPolicy: noeviction
+
+databases:
+  - name: masterprose-db
+    databaseName: masterprose
+    user: masterprose
+    plan: free
+    region: oregon

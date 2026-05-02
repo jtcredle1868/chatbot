@@ -2,22 +2,32 @@
 
 import { useId, useState, useRef, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 
 export function ChatbotWidget() {
   const id = useId();
   const [open, setOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, status } = useChat({
+  const { messages, sendMessage, status } = useChat({
     id,
-    api: "/api/widget-chat",
+    transport: new DefaultChatTransport({ api: "/api/widget-chat" }),
   });
+
+  const [input, setInput] = useState("");
 
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!input.trim() || status === "streaming") return;
+    sendMessage({ role: "user", parts: [{ type: "text", text: input }] });
+    setInput("");
+  }
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
@@ -69,35 +79,40 @@ export function ChatbotWidget() {
               </div>
             </div>
 
-            {messages.map((m) => (
-              <div
-                key={m.id}
-                className={`flex gap-2 ${m.role === "user" ? "flex-row-reverse" : ""}`}
-              >
-                {m.role === "assistant" && (
-                  <div
-                    style={{ backgroundColor: "var(--mp-purple)" }}
-                    className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                  >
-                    <span className="text-white text-xs font-bold">MP</span>
-                  </div>
-                )}
+            {messages.map((m) => {
+              const textPart = m.parts?.find((p) => p.type === "text");
+              const content = textPart && "text" in textPart ? textPart.text : "";
+              if (!content) return null;
+              return (
                 <div
-                  className={`rounded-2xl px-3 py-2 max-w-[80%] text-sm ${
-                    m.role === "user"
-                      ? "text-white rounded-tr-sm"
-                      : "bg-gray-100 text-gray-800 rounded-tl-sm"
-                  }`}
-                  style={
-                    m.role === "user"
-                      ? { backgroundColor: "var(--mp-purple)" }
-                      : {}
-                  }
+                  key={m.id}
+                  className={`flex gap-2 ${m.role === "user" ? "flex-row-reverse" : ""}`}
                 >
-                  {m.content}
+                  {m.role === "assistant" && (
+                    <div
+                      style={{ backgroundColor: "var(--mp-purple)" }}
+                      className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                    >
+                      <span className="text-white text-xs font-bold">MP</span>
+                    </div>
+                  )}
+                  <div
+                    className={`rounded-2xl px-3 py-2 max-w-[80%] text-sm ${
+                      m.role === "user"
+                        ? "text-white rounded-tr-sm"
+                        : "bg-gray-100 text-gray-800 rounded-tl-sm"
+                    }`}
+                    style={
+                      m.role === "user"
+                        ? { backgroundColor: "var(--mp-purple)" }
+                        : {}
+                    }
+                  >
+                    {content}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {status === "streaming" && (
               <div className="flex gap-2">
@@ -126,7 +141,7 @@ export function ChatbotWidget() {
           >
             <input
               value={input}
-              onChange={handleInputChange}
+              onChange={(e) => setInput(e.target.value)}
               placeholder="Ask something..."
               className="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-400"
             />
